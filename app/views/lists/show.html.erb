@@ -1,3 +1,13 @@
 <h1> <%= @list.name%> </h1>
-<%= link_to "Back to Lists", lists_path%>
+<%= pluralize(@list.movies.size, "movie") %>
+<%= "You haven't saved any movies yet!" if @list.movies.empty? %>
+<br><% @list.movies.each do |movie| %>
+      <% bookmark = Bookmark.find_by(list: @list, movie: movie) %>
+      <strong><%= movie.title %> <span class="text-muted font-weight-normal">• <%= movie.rating %> <i class="fas fa-star star-yellow"></i></span></strong>
+      <%= image_tag movie.poster_url, width: '200', height: '300' %>
+      <p>Overiew Movie: <%= movie.overview %></p>
+      <p>Comment: <%= bookmark.comment %> </p>
+      <br><%= link_to "delete", bookmark_path(bookmark), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to remove #{movie.title} from your #{@list.name} list"} %></br>
+  <% end %></br>
+<br><%= link_to "Back to Lists", lists_path%></br>
 <%= link_to "Add a Bookmark", new_list_bookmark_path(@list) %>
