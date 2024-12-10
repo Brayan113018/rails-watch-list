@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+
+  root "lists#index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :lists, only: [:index, :new, :create, :show] do
     resources :bookmarks, only: [:new, :create]
@@ -10,6 +12,6 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  # root "posts#index"
+
 
 end
